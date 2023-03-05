@@ -3,18 +3,43 @@
 import sys
 import threading
 import numpy
+ 
 
+def compute_h(d, parents):
+    root = 0
+    pos = [[]for _ in range(d)]
+    for i in range(d):
+        if parents[i] == -1:
+            root = i
+        else:
+            pos[parents[i]].append(i)    
 
-def compute_height(n, parents):
-    # Write this function
-    max_height = 0
-    # Your code here
-    return max_height
-
-
-def main():
-    # implement input form keyboard and from files
+    def max_h(f):
+        height = 1
+        if not pos[f]:
+            return height
+        else:
+            for children in pos[f]:
+                height = max(height, max_h(children))
+            return height+1
+        return max_h(root)
     
+def main():
+    text = input("Enter F or I:")
+    if "I" in text:
+        n = int(input())
+        parents = list(map(int,input().split()))
+    elif "F" in text:
+        filename = input()
+    else:
+        print("Error: wrong name of file")    
+        return
+    
+        
+
+
+
+
     # let user input file name to use, don't allow file names with letter a
     # account for github input inprecision
     
